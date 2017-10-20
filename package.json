@@ -1,0 +1,22 @@
+{
+  "name": "hangman-node-app",
+  "version": "1.0.0",
+  "description": "guess a random word, one letter at a time",
+  "main": "game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/winfredSunga-jw0226/hangman-node-app.git"
+  },
+  "author": "winfred sunga",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/winfredSunga-jw0226/hangman-node-app/issues"
+  },
+  "homepage": "https://github.com/winfredSunga-jw0226/hangman-node-app#readme",
+  "dependencies": {
+    "inquirer": "^3.3.0"
+  }
+}
