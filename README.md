@@ -13,5 +13,5 @@ Here are the rules for this game :
 * if your guesses left goes to 0 and still haven't solved the word, you will be given a choice to continue playing or end the game
 * there will be a total of 20 rounds in this game. The game will end when you run out of words to guess - if you get this far :)
 
-##Good Luck and enjoy the game!!!
+## Good Luck and enjoy the game!!!
 
