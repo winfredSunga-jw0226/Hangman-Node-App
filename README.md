@@ -14,8 +14,16 @@ Here are the rules for this game :
 * if your guesses left goes to 0 and still haven't solved the word, you will be given a choice to continue playing or end the game
 * there will be a total of 20 rounds in this game. The game will end when you run out of words to guess - if you get this far :)
 
+### How To Start
+1. Open the terminal (on a Mac) or command line (on a PC)
+2. Navigate to the directory where you cloned the repo
+3. Simply type in this command --> node<space>hangman.js
+4. The series of prompts will guide you throughout the game
+5. Grab your favorite drink and enjoy! 
+
 ### Technical Info
 This game was built using - 
+* Javascript
 * Node.js 
 * Inquirer package (https://www.npmjs.com/package/inquirer)
 * Alphabet package (https://www.npmjs.com/package/alphabet)
