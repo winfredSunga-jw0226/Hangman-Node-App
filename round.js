@@ -4,7 +4,8 @@ var Word = require("./word.js");
 //create a constructor named Game
 var Round = function(words, number) {
   
-  var word;
+  var word; 
+  var randomIndex;
 
   //property for an array of words
   this.words = words;
@@ -24,17 +25,23 @@ var Round = function(words, number) {
   //function to increment round
   this.incrementRound = function() {
     this.roundNumber ++;
+
+    //reset guessed letter to []
+    this.guessedLetters = [];
   };
+
+  //assign a word to be guessed
+  this.currentWord = "";//this.getRandomWord();
 
   //remove a word from the words array
   this.removeWord = function(index) {
 
     //remove the word which is found in the index provided
     this.words.splice(index, 1);
-  };
 
-  //assign a word to be guessed
-  this.currentWord = "";//this.getRandomWord();
+    //call the increment round method
+    this.incrementRound();
+  };
 
   //method to pick a random word
   this.getRandomWord = function() {
@@ -42,7 +49,7 @@ var Round = function(words, number) {
     var length = this.words.length;
 
     //get a random index
-    var randomIndex = Math.floor(Math.random() * length);
+    randomIndex = Math.floor(Math.random() * length);
 
     //remove the word from the words array
     this.removeWord(randomIndex);

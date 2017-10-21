@@ -12,7 +12,7 @@ console.log("Let's Play Hangman!!!\n");
 var round = new Round(wordsArray, numberOfGuesses);
 
 //increment the round #
-round.incrementRound();
+//round.incrementRound();
 
 //get random word
 round.getRandomWord();
@@ -20,11 +20,17 @@ round.getRandomWord();
 //at the start of game, initialize the input to be empty string
 var input = " ";
 
-function playRound() {
+function playRound(callback) {
+  if(callback) {
+    round.getRandomWord();
+  }
+
   //display the word to be guessed - first time it will be all "_" but as we progress they will be replaced with the actual letter
   console.log(round.currentWord + "\n");
   console.log(round.getDisplayWord(input));
   console.log("Round # : " + round.roundNumber);
+  console.log("Words Count : " + round.words.length);
+  console.log(round.guessedLetters);
 
   //add the letter into the guessed letters array
   if (input !== " ") {
@@ -90,19 +96,28 @@ function playRound() {
         //display you got it right, next word!!!
         console.log("You got it right!!! Next word!");
 
+        //reset input 
+        input = " ";
+
         //increment round number
-        round.incrementRound();
+        //round.incrementRound();
 
-        //remove word from word bank so it won't be picked again
-        round.removeWord();
+        // //remove word from word bank so it won't be picked again
+        // round.removeWord();
 
-        //pick a new word
-        round.getRandomWord();
+        //pick a new random word
+        //round.getRandomWord();
 
         //prompt the user for next input 
-        playRound();
-      }
-
+        playRound(round.getRandomWord);
+      }  
+      //else if the letter belongs to word and there are no more letters left to guess AND it's  the final round 
+      else if (round.currentWord.indexOf(input) !== -1 && round.displayWord.indexOf("_") === -1 && round.roundNumber === round.totalRounds) {
+        //display you got it right, next word!!!
+        console.log("You got it right!!! You completed the game. GAME OVER!!!");
+        //end game
+        process.exit();
+      }  
   });
 }
 
@@ -122,7 +137,7 @@ function promptEndGame() {
       process.exit();
     } else {
       //keep prompting for the next letter
-      playGame();
+      playGame(ound.getRandomWord);
     }
   });
 }
