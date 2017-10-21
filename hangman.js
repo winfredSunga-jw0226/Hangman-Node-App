@@ -1,60 +1,130 @@
 //require the game constructor from game.js
-var Game = require("./game.js");
+var Round = require("./round.js");
 var inquirer = require("inquirer");
+var alphabet = require("alphabet");
 
 //create an array of words for guessing - with a theme (greek mythology characters)
 var wordsArray = ["hercules", "poseidon", "minotaur","medusa","aphrodite", "hephaestus", "prometheus", "perseus", "cronus","nemesis","artemis", "apollo", "zeus", "hades", "hera","uranus","phoebe","kraken","pegasus","titans"];
-// var numberOfGuesses = 10;
+var numberOfGuesses = 10;
 
 console.log("Let's Play Hangman!!!\n");
 
-var game = new Game(wordsArray, numberOfGuesses);
+var round = new Round(wordsArray, numberOfGuesses);
 
-//create a new property that will keep all the used letters for tracking
-game.usedLetters = [];
+//increment the round #
+round.incrementRound();
 
-//log the word that needs to be guessed
-console.log(game.guessThisWord);
+//get random word
+round.getRandomWord();
 
-//show the console the "invisible" word 
-//var invisibleWord = new Word(game.guessThisWord);
-console.log(game.turnWordIntoInvisible()); 
+//at the start of game, initialize the input to be empty string
+var input = " ";
 
-//console.log(invisibleWord.invisibleWord);
+function playRound() {
+  //display the word to be guessed - first time it will be all "_" but as we progress they will be replaced with the actual letter
+  console.log(round.currentWord + "\n");
+  console.log(round.getDisplayWord(input));
+  console.log("Round # : " + round.roundNumber);
 
-//unhide the word, one letter at a time
-
-//prompt the user to guess a letter
-
-
-function playGame() {
-  game.displayWordToConsole();
+  //add the letter into the guessed letters array
+  if (input !== " ") {
+    round.guessedLetters.push(input);
+  }
+  
   inquirer.prompt([
   {
     type : "input",
     name : "letter",
-    message : "Guess a letter!"
-
+    message : "Guess a letter!",
+    validate : function (value) {
+      if (alphabet.join("").indexOf(value) !== - 1) {
+        return true;
+      } else {
+        return "Please enter a letter!";
+      }
+    }
   }
   ]).then(function(response) {
-    console.log("You entered : " + reponse.letter);
+      //console.log(round.guessedLetters);
 
-    //check if the letter has not already been used
-    if (guessedLetters.indexOf(respose.letter) !== - 1) {
-      //push the letter into the guessed letters array
-      game.guessedLetters.push(letter);
-    } 
-    //else check if the 
-    else {
+      input = response.letter;
 
-    }
-    
+      //update what the display word would be
+      round.getDisplayWord(input);
+
+      // console.log("You entered : " + input);
+
+      //if player entered an already used letter
+      if (round.guessedLetters.indexOf(input) !==  -1) {
+        //display an error or warning
+        console.log("You already used " + input + ". Pick another letter!");
+      
+        //prompt the user for next input
+        playRound();
+
+      } 
+      // else if the letter doesn't belong to the word
+      else if (round.currentWord.indexOf(input) === -1) {
+        //decrement guesses left 
+        round.guessesRemaining--;
+
+        console.log("INCORRECT!!!\nGuesses Left : " + round.guessesRemaining);
+        
+        //if guesses left > 0
+        if (round.guessesRemaining > 0) {
+          //prompt the user for next input
+          playRound();
+        } 
+        //else prompt user if they want to end game
+        else {
+          promptEndGame();
+        }
+      } 
+      //else if the letter belongs to word AND there are more letters left to guess
+      else if (round.currentWord.indexOf(input) !== -1 && round.displayWord.indexOf("_") !== -1) {
+       //prompt the user for next input 
+       playRound();
+      } 
+      //else if the letter belongs to word and there are no more letters left to guess AND it's not the final round 
+      else if (round.currentWord.indexOf(input) !== -1 && round.displayWord.indexOf("_") === -1 && round.roundNumber < round.totalRounds) {
+        //display you got it right, next word!!!
+        console.log("You got it right!!! Next word!");
+
+        //increment round number
+        round.incrementRound();
+
+        //remove word from word bank so it won't be picked again
+        round.removeWord();
+
+        //pick a new word
+        round.getRandomWord();
+
+        //prompt the user for next input 
+        playRound();
+      }
 
   });
 }
 
-
-//function to display the letter if it belongs to the word
-function displayLetter(letter) {
-
+function promptEndGame() {
+  inquirer.prompt([
+  {
+    name : "endGame",
+    type : "list",
+    message : "Do you wish to end the game?",
+    choices : ["Yes", "No"]
+  }
+  ]).then(function(response) {
+    
+    //if the user responsed yes to the prompt
+    if (response.endGame.toLowerCase() === "yes") {
+      //end the game
+      process.exit();
+    } else {
+      //keep prompting for the next letter
+      playGame();
+    }
+  });
 }
+
+playRound();

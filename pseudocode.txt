@@ -1,0 +1,84 @@
+//create a words array
+
+//initialize # of guesses left to 10
+
+//start a new game 
+//pick a random word from the words array 
+//remove the picked word from array 
+
+
+  //display the letters as '_', spaces to remain as spaces
+
+  //THE GAME LOGIC STARTS HERE!!!
+  //display wordDisplay on screen 
+  //prompt the user to guess a letter ("Guess a letter!")
+
+  //if the key entered is not a letter
+    //log an error
+    //go back to THE GAME LOGIC STARTS HERE!!!
+
+  //else if it belongs to a letter already used
+    //log an error
+    //go back to THE GAME LOGIC STARTS HERE!!!
+
+  //else if doesn't belong to the word
+    //show "INCORRECT!!!"
+    //decrement the guesses left
+    //show the number of guesses left
+    //push the letter guessed into an array for tracking 
+    //if the guesses left > 0
+      //go back to THE GAME LOGIC STARTS HERE!!!
+    //else 
+      //Prompt user if they want to end game
+      //if yes
+        //end game
+      //else 
+        //go back to THE GAME LOGIC STARTS HERE!!!
+      
+  //else if it belongs to the word 
+    //replace the '_' with the letter, mark letter as guessed
+    //push the letter guessed into an array for tracking
+
+    //if there are still letters left for guessing
+      //go back to THE GAME LOGIC STARTS HERE!!!
+    //else if round # !== total rounds (if there are still words remaining to be guessed)
+      //increment current round #
+      //display "You got it right!!! Next word!"
+      //pick a new word
+      //go back to THE GAME LOGIC STARTS HERE!!! 
+    //else
+      //display "You got it right!!! You ran out of words to guess. GAME OVER!!!"
+      //end the game  
+
+
+
+//if letter is correct
+  //replace the '_' with the letter and display wordCurrentState on screen
+
+  //if all the letters are guessed AND there are no more words available to guess
+    
+
+  //else if all the letters are guessed and there are more words available to guess
+    //display "You got it right!!! Next word!"
+    //start from beginning (line1)
+
+// if letter is incorrect
+  //decrement # of guesses left
+  //display wordCurrentState on screen 
+
+  //if guesses left = 0
+    //prompt player if they want to continue playing
+
+    //if yes 
+      //start from the beginning (line1)
+    
+    //else 
+      //end the game
+
+  //else 
+    //display "INCORRECT!!!"
+    //display the # of guesses remaining (eg. "7 guesses remaining!!!")
+    //prompt the user to guess a letter ("?Guess a letter!")
+
+
+NPM Packages to install : inquirer

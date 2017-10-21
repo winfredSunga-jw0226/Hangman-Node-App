@@ -1,8 +1,8 @@
 {
   "name": "hangman-node-app",
   "version": "1.0.0",
-  "description": "guess a random word, one letter at a time",
-  "main": "game.js",
+  "description": "play hangman on the console",
+  "main": "hangman.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -12,45 +12,16 @@ var Letter = function(letter, index) {
   //boolean variable to mark whether the letter has been guessed or not. Initialize to false
   this.isGuessed = false;
 
-  //function to mark the letter as guessed - update boolean variable to true and the display character to the actual letter
-  this.markLetterAsGuessed = function(input) {
-    if (this.letter === letter) {
+  //function to check if the letter is guessed, returns boolean and is evaluated by the Word constructor
+  this.checkAgainstInput = function(input) {
+    if (this.letterValue === input.toLowerCase()) {
       this.isGuessed = true;
-      this.displayCharacter = this.letter;
+      this.displayCharacter = this.letterValue;
+      return true;
+    } else {
+      return false;
     }
   };
  };
 
  module.exports = Letter;
-
-
- var Letter = function(str) {
-  if(str !== " ") {
-    this.type = "letter";
-    this.value = str;
-    this.baseValue = str.toLowerCase();
-    this.solved = false;
-    this.display = "_"
-    this.show = function(check) {
-      if(this.baseValue === check) {
-        this.solved = true;
-        this.display = this.value;
-        return true;
-      }
-      else if (!this.solved) {
-        this.display = "_";
-      }
-    }
-  }
-  else {
-    this.type = "space";
-    this.value = str;
-    this.solved = true;
-    this.display = " ";
-    this.show = function(check) {
-      //nothing happens, this just needs to exist
-    }
-  }
-}
-
-module.exports = Letter;

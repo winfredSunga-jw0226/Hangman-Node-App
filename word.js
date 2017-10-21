@@ -2,76 +2,63 @@
 var Letter = require("./letter.js");
 
 //create a constructor called Word
-var Word = function(word) {
+var Word = function(word, input) {
   //create a word property
-  this.word = word;
+  this.wordValue = word.toLowerCase();
 
+  //method to get an array of letter objects
   this.getArrayOfLetterObjects = function() {
-    var letters = this.word.split("");
+    //split the word into an array of letters
+    var letters = this.wordValue.split("");
 
+    //placeholder for letter objects that will be pushed into an array
     var letterObjects = [];
 
-   letters.forEach(function(element, index) {
+    //iterate through each letter in the letters array 
+    letters.forEach(function(element, index) {
+      //create an instance of Letter constructor for each letter
       var letter = new Letter(element, index);
+      //push the new letter object into letterObjects array 
       letterObjects.push(letter);
     });
-
+    //return the letterbjects array
     return letterObjects;
   };
 
+  //property which persists the array of letter objects
   this.letterObjectArrays = this.getArrayOfLetterObjects();
 
-  this.getDisplayWord = function() {
-    var letters = [];
+  //function to get the display word
+  this.getDisplayWord = function(input) {
+    if (input === "") {
+      return;
+    }
+    
+    //placeholder for the word, an array
+    var word = [];
 
+    //iterate through each letter objects in the array
     for (var key in this.letterObjectArrays) {
-      letters.push(this.letterObjectArrays[key].displayCharacter)
-    }
+      //letter object variable will hold the object
+      var letterObject = this.letterObjectArrays[key];
 
-    return letters
-  };
-
-  this.displayWord = this.getDisplayWord();
-
-
-
-  //create a method which will show the invisible word
-  this.initializeWord = function() {
-    //split the word(s) into an array of letters
-    var lettersArray = this.word.split("");
-
-    //create an empty array for the display letters
-    var displayLettersArray = [];
-
-    for (var i = 0; i < lettersArray.length; i++) {
-      var letter = new Letter(lettersArray[i], i);
-
-      displayLettersArray.push(letter.displayCharacter);
-    }
-    return displayLettersArray.join(" ");
-  };
-
-  /*
-
-  //create a function which will update the display word
-  this.displayUpdatedWord = function() {
-    var displayLettersArray = [];
-
-    for (var i = 0; i < lettersArray.length; i++) {
-      if (letter.letter === lettersArray[i]) {
-        displayLettersArray.push[letter.displayCharacter];
+      //if the output of the check method returns true
+      if (letterObject.checkAgainstInput(input)) {
+        //push the actual letter into the word array
+        word.push(letterObject.displayCharacter);
+      } //else push the '_'
+      else {
+        word.push(letterObject.displayCharacter);
       }
     }
-    return displayLettersArray;
+    //return the word array
+    return word.join(" ");
   };
 
-  //create a property which will hold how the word will be displayed (initially) in the console
-  this.displayInvisibleWord = this.displayInvisibleWord();
-
-  //create a property that has the updated display word when a letter is guessed correctly
-  this.displayUpdatedWord = this.displayUpdatedWord();
-*/
+  //persistence of the display word
+  //this.displayWord = this.getDisplayWord();
 
 };
+
 module.exports = Word;
 
