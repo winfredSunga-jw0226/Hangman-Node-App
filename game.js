@@ -34,10 +34,10 @@ var Round = function(words, number) {
   this.currentWord = "";//this.getRandomWord();
 
   //remove a word from the words array
-  this.removeWord = function(index) {
+  this.removeWord = function() {
 
     //remove the word which is found in the index provided
-    this.words.splice(index, 1);
+    this.words.splice(randomIndex, 1);
 
     //call the increment round method
     this.incrementRound();
@@ -51,14 +51,14 @@ var Round = function(words, number) {
     //get a random index
     randomIndex = Math.floor(Math.random() * length);
 
-    //remove the word from the words array
-    this.removeWord(randomIndex);
-
     //create a new instance of Word constructor
     word = new Word(this.words[randomIndex]);
 
     //assign the word to be guessed
     this.currentWord = this.words[randomIndex];
+
+    //remove the word from the words array
+    this.removeWord(randomIndex);
 
     //return the random word picked
     return this.words[randomIndex];

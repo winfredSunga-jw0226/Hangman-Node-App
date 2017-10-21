@@ -30,10 +30,10 @@ var Word = function(word, input) {
 
   //function to get the display word
   this.getDisplayWord = function(input) {
-    if (input === "") {
-      return;
-    }
-    
+    // if (input === " ") {
+    //   return;
+    // }
+
     //placeholder for the word, an array
     var word = [];
 

@@ -1,5 +1,5 @@
 //require the game constructor from game.js
-var Round = require("./round.js");
+var Game = require("./game.js");
 var inquirer = require("inquirer");
 var alphabet = require("alphabet");
 
@@ -8,33 +8,42 @@ var wordsArray = ["hercules", "poseidon", "minotaur","medusa","aphrodite", "heph
 var numberOfGuesses = 10;
 
 console.log("Let's Play Hangman!!!\n");
+console.log("Theme : Greek Mythology Characters\n");
 
-var round = new Round(wordsArray, numberOfGuesses);
-
-//increment the round #
-//round.incrementRound();
+var game = new Game(wordsArray, numberOfGuesses);
 
 //get random word
-round.getRandomWord();
+game.getRandomWord();
 
 //at the start of game, initialize the input to be empty string
 var input = " ";
 
-function playRound(callback) {
+//function to run the game
+function playGame(callback) {
+  //if there is a callback function, get a new random word
   if(callback) {
-    round.getRandomWord();
-  }
+    //get a new random word
+    game.getRandomWord();
 
+    //reset guesses remainining
+    game.guessesRemaining = numberOfGuesses;
+
+    //reset input
+    input = " ";
+  }
+ 
   //display the word to be guessed - first time it will be all "_" but as we progress they will be replaced with the actual letter
-  console.log(round.currentWord + "\n");
-  console.log(round.getDisplayWord(input));
-  console.log("Round # : " + round.roundNumber);
-  console.log("Words Count : " + round.words.length);
-  console.log(round.guessedLetters);
+  //console.log("current word : " + game.currentWord + "\n");
+  console.log(game.getDisplayWord(input) + "\n");
+  //console.log("Round # : " + game.roundNumber);
+  //console.log("Words Count : " + game.words.length);
+  //console.log(game.guessedLetters);
+  //console.log(game.words);
+  //console.log("total rounds : " + game.totalRounds);
 
   //add the letter into the guessed letters array
   if (input !== " ") {
-    round.guessedLetters.push(input);
+    game.guessedLetters.push(input);
   }
   
   inquirer.prompt([
@@ -56,63 +65,51 @@ function playRound(callback) {
       input = response.letter;
 
       //update what the display word would be
-      round.getDisplayWord(input);
+      game.getDisplayWord(input);
 
       // console.log("You entered : " + input);
 
       //if player entered an already used letter
-      if (round.guessedLetters.indexOf(input) !==  -1) {
+      if (game.guessedLetters.indexOf(input) !==  -1) {
         //display an error or warning
         console.log("You already used " + input + ". Pick another letter!");
       
         //prompt the user for next input
-        playRound();
+        playGame();
 
       } 
       // else if the letter doesn't belong to the word
-      else if (round.currentWord.indexOf(input) === -1) {
+      else if (game.currentWord.indexOf(input) === -1) {
         //decrement guesses left 
-        round.guessesRemaining--;
+        game.guessesRemaining--;
 
-        console.log("INCORRECT!!!\nGuesses Left : " + round.guessesRemaining);
+        console.log("INCORRECT!!!\nGuesses Left : " + game.guessesRemaining);
         
         //if guesses left > 0
-        if (round.guessesRemaining > 0) {
+        if (game.guessesRemaining > 0) {
           //prompt the user for next input
-          playRound();
+          playGame();
         } 
         //else prompt user if they want to end game
         else {
-          promptEndGame();
+          promptEndGame(game.currentWord);
         }
       } 
       //else if the letter belongs to word AND there are more letters left to guess
-      else if (round.currentWord.indexOf(input) !== -1 && round.displayWord.indexOf("_") !== -1) {
+      else if (game.currentWord.indexOf(input) !== -1 && game.displayWord.indexOf("_") !== -1) {
        //prompt the user for next input 
-       playRound();
+       playGame();
       } 
       //else if the letter belongs to word and there are no more letters left to guess AND it's not the final round 
-      else if (round.currentWord.indexOf(input) !== -1 && round.displayWord.indexOf("_") === -1 && round.roundNumber < round.totalRounds) {
+      else if (game.currentWord.indexOf(input) !== -1 && game.displayWord.indexOf("_") === -1 && game.roundNumber < game.totalRounds) {
         //display you got it right, next word!!!
         console.log("You got it right!!! Next word!");
 
-        //reset input 
-        input = " ";
-
-        //increment round number
-        //round.incrementRound();
-
-        // //remove word from word bank so it won't be picked again
-        // round.removeWord();
-
-        //pick a new random word
-        //round.getRandomWord();
-
-        //prompt the user for next input 
-        playRound(round.getRandomWord);
+        //recurse the function with a callback
+        playGame(game.getRandomWord);
       }  
       //else if the letter belongs to word and there are no more letters left to guess AND it's  the final round 
-      else if (round.currentWord.indexOf(input) !== -1 && round.displayWord.indexOf("_") === -1 && round.roundNumber === round.totalRounds) {
+      else if (game.currentWord.indexOf(input) !== -1 && game.displayWord.indexOf("_") === -1 && game.roundNumber === game.totalRounds) {
         //display you got it right, next word!!!
         console.log("You got it right!!! You completed the game. GAME OVER!!!");
         //end game
@@ -121,12 +118,13 @@ function playRound(callback) {
   });
 }
 
-function promptEndGame() {
+//function to prompt user if they want to end game or not
+function promptEndGame(currentWord) {
   inquirer.prompt([
   {
     name : "endGame",
     type : "list",
-    message : "Do you wish to end the game?",
+    message : 'The correct word is "' + currentWord + '". You ran out of guesses. Do you wish to end the game?',
     choices : ["Yes", "No"]
   }
   ]).then(function(response) {
@@ -137,9 +135,10 @@ function promptEndGame() {
       process.exit();
     } else {
       //keep prompting for the next letter
-      playGame(ound.getRandomWord);
+      playGame(game.getRandomWord);
     }
   });
 }
 
-playRound();
+//this starts the game
+playGame();
