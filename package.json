@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/winfredSunga-jw0226/hangman-node-app#readme",
   "dependencies": {
+    "alphabet": "^1.0.0",
     "inquirer": "^3.3.0"
   }
 }
