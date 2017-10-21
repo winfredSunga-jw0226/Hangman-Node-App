@@ -25,8 +25,8 @@ Here are the rules for this game :
 This game was built using - 
 * Javascript
 * Node.js 
-* Inquirer package (https://www.npmjs.com/package/inquirer)
-* Alphabet package (https://www.npmjs.com/package/alphabet)
+* [Inquirer package] (https://www.npmjs.com/package/inquirer)
+* [Alphabet package] (https://www.npmjs.com/package/alphabet)
 
 ## Good Luck and enjoy the game!!!
 
