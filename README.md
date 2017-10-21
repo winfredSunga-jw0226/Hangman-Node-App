@@ -17,7 +17,7 @@ Here are the rules for this game :
 ### How To Start
 1. Open the terminal (on a Mac) or command line (on a PC)
 2. Navigate to the directory where you cloned the repo
-3. Simply type in this command --> node<space>hangman.js
+3. Simply type in this command --> `node hangman.js` then press the enter key
 4. The series of prompts will guide you throughout the game
 5. Grab your favorite drink and enjoy! 
 
