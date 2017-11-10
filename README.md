@@ -21,12 +21,15 @@ Here are the rules for this game :
 4. The series of prompts will guide you throughout the game
 5. Grab your favorite drink and enjoy! 
 
+### Demo
+[Hangman Node App Demo](hangman_node_demo.mp4)
+
 ### Technical Info
 This game was built using - 
 * Javascript
 * Node.js 
-* [Inquirer package] (https://www.npmjs.com/package/inquirer)
-* [Alphabet package] (https://www.npmjs.com/package/alphabet)
+* [Inquirer package](https://www.npmjs.com/package/inquirer)
+* [Alphabet package](https://www.npmjs.com/package/alphabet)
 
 ## Good Luck and enjoy the game!!!
 
